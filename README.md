@@ -8,7 +8,7 @@ file, next to the original track. **The video is never re-encoded**: only audio 
 20 GB movie takes about as long as copying it once.
 
 ```powershell
-.\Convert-SurroundToStereo.ps1 "D:\Movies\Dune.mkv"
+.\Convert-SurroundToStereo.ps1 "D:\Movies\TeneT.mkv"
 ```
 
 Windows, PowerShell 5.1 (shipped with Windows), and `ffmpeg` — nothing else.
