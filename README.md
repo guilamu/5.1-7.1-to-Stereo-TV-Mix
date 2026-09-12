@@ -8,7 +8,7 @@ file, next to the original track. **The video is never re-encoded**: only audio 
 20 GB movie takes about as long as copying it once.
 
 ```powershell
-.\Convert-SurroundToStereo.ps1 "D:\Movies\TeneT.mkv"
+.\Convert-SurroundToStereo.ps1 "D:\Movies\Dune.mkv"
 ```
 
 Windows, PowerShell 5.1 (shipped with Windows), and `ffmpeg` — nothing else.
@@ -93,6 +93,35 @@ Unblock-File .\Convert-SurroundToStereo.ps1
 
 ## Usage
 
+### With the mouse: `Convertir-en-stereo.cmd`
+
+Windows cannot run a `.ps1` from Explorer — double-clicking one opens it in Notepad, and Explorer
+refuses to drop files onto it. `Convertir-en-stereo.cmd` exists to bridge that gap, and is the
+easiest way to use the tool:
+
+* **Drag and drop** one or more files — or whole folders — onto the `.cmd`. They become the list to
+  process; folders are searched recursively.
+* **Double-click** it to be asked what to process. Typing nothing and pressing Enter takes every
+  video file in the current folder.
+
+Either way it then asks one question — *should the stereo track become the default track?* — where
+Enter means no, and keeps the window open at the end so you can read the report.
+
+You do **not** need a PowerShell prompt for this: a `.cmd` is run by `cmd.exe`, and it launches
+PowerShell itself with the right arguments. It works from Explorer, from a command prompt, from the
+Run dialog, from a shortcut, and from a PowerShell prompt too. It also passes
+`-ExecutionPolicy Bypass`, so it still works on a machine where running a `.ps1` by hand is blocked
+by policy — which makes it the more reliable of the two entry points.
+
+Keep the `.cmd` in the same folder as the script: it looks for it next to itself, by its own path.
+One caveat: launched from a UNC network path (`\\server\share\...`), `cmd.exe` refuses to use it as
+a working directory and falls back to `C:\Windows`. Copy both files locally.
+
+The launcher only takes files and the default-track question. For every other option — mode, codec,
+loudness target, previews — use the command line below.
+
+### From the command line
+
 ```powershell
 # One file, default settings
 .\Convert-SurroundToStereo.ps1 "D:\Movies\Dune.mkv"
@@ -110,13 +139,9 @@ Unblock-File .\Convert-SurroundToStereo.ps1
 .\Convert-SurroundToStereo.ps1 "D:\Movies\Dune.mkv" -PreviewFrom 00:45:00 -PreviewLength 120
 ```
 
-Mouse users: **drag files or folders onto `Convertir-en-stereo.cmd`**, or double-click it and answer
-the prompt. Windows cannot do either with a `.ps1` directly — double-clicking one opens it in
-Notepad, and Explorer refuses the drop — which is the only reason the launcher exists. It also keeps
-the window open at the end so you can read the report.
-
-Run the script without arguments and it asks what to process; pressing Enter alone takes every video
-file in the current folder.
+Run the script without arguments and it asks what to process, then whether the stereo track should
+be the default one; pressing Enter alone at the first prompt takes every video file in the current
+folder.
 
 ## Options
 
